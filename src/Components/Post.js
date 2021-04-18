@@ -25,17 +25,15 @@ const Post = (post) => {
       <div>{location.state.title}</div>
       <div>
         {comments.map((comment) => (
-          <>
-            <span>
-              {comment.name}
-              <br />
-            </span>
-            <span>{comment.body}</span>
+          <div key={comment.id}>
+            {comment.name}
             <br />
-            <span>{comment.email}</span>
+            {comment.body}
+            <br />
+            {comment.email}
             <br />
             <br />
-          </>
+          </div>
         ))}
       </div>
     </>

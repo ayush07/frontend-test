@@ -7,24 +7,22 @@ const Posts = ({ posts, loading, comments, users }) => {
   return (
     <ul className='list-group mb-4'>
       {posts.map((post) => (
-        <>
-          <div key={post.id}>
-            <span>
-              <Link to={{ pathname: `/post/${post.id}`, state: post }}>
-                {post.title}
+        <div key={post.id}>
+          <span>
+            <Link to={{ pathname: `/post/${post.id}`, state: post }}>
+              Title : {post.title}
+            </Link>
+            <br />
+            {users.map((user) => (
+              <Link
+                key={user.id}
+                to={{ pathname: `user/${user.id}`, state: user }}
+              >
+                {user.id === post.userId ? 'Author : ' + user.username : ''}
               </Link>
-              <h1>
-                {users.map((user) => (
-                  <Link to={{ pathname: `user/${user.id}`, state: user }}>
-                    {user.id === post.userId ? user.username : ''}
-                  </Link>
-                ))}
-              </h1>
-            </span>
-          </div>
-
-          <br />
-        </>
+            ))}
+          </span>
+        </div>
       ))}
     </ul>
   );

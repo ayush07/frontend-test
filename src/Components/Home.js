@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Posts from './Posts';
 import Post from './Post';
-
+import ReactAutocomplete from 'react-autocomplete';
 import Pagination from './Pagination';
 import axios from 'axios';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
@@ -11,7 +11,7 @@ const App = () => {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
   const [users, setUsers] = useState([]);
-
+  const [searchValue, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -47,7 +47,32 @@ const App = () => {
   return (
     <>
       <div className='container mt-5'>
-        <h1 className='text-primary mb-3'>My Blog</h1>
+        <h1 className='text-primary mb-3'>Posts</h1>
+        <ReactAutocomplete
+          style={{ float: 'right' }}
+          items={users}
+          shouldItemRender={(item, value) =>
+            item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+          }
+          getItemValue={(item) => item.name}
+          renderItem={(item, highlighted) => (
+            <div
+              key={item.id}
+              //   style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
+            >
+              {searchValue ? (
+                <Link to={{ pathname: `user/${item.id}`, state: item }}>
+                  {item.name}
+                </Link>
+              ) : (
+                ''
+              )}
+            </div>
+          )}
+          value={searchValue}
+          onChange={(e) => setSearch(e.target.value)}
+          // onSelect={value => this.setState({ value })}
+        />
         <Posts
           posts={currentPosts}
           loading={loading}
