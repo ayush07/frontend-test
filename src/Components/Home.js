@@ -69,7 +69,6 @@ const App = () => {
             )}
             value={searchValue}
             onChange={(e) => setSearch(e.target.value)}
-            // onSelect={value => this.setState({ value })}
           />
         </div>
         <br />
