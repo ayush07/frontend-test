@@ -18,7 +18,6 @@ const Post = (post) => {
     fetchComments();
   }, []);
 
-  console.log(post);
   return (
     <>
       <div className='container mt-5'>

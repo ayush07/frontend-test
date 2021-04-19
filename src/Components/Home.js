@@ -21,9 +21,6 @@ const App = () => {
       const comments = await axios.get(`${url}/comments`);
       const users = await axios.get(`${url}/users`);
 
-      console.log('POSTS', posts.data);
-      console.log('USERS======>', users.data);
-      console.log('COMMENTS===========>>>', comments.data);
       setPosts(posts.data);
       setComments(comments.data);
       setUsers(users.data);

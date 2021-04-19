@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 const User = (props) => {
   let location = useLocation();
-  console.log(props);
 
   return (
     <>
