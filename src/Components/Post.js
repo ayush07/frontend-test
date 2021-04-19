@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Post = (post) => {
   const [comments, setComments] = useState([]);
+  let location = useLocation();
   const url = 'https://jsonplaceholder.typicode.com';
   useEffect(() => {
     const fetchComments = async () => {
@@ -11,29 +12,33 @@ const Post = (post) => {
         `${url}/comments?postId=${location.state.id}`,
       );
 
-      console.log('COMMENTS===========>>>', comments.data);
       setComments(comments.data);
     };
 
     fetchComments();
   }, []);
-  let location = useLocation();
 
   console.log(post);
   return (
     <>
-      <div>{location.state.title}</div>
-      <div>
+      <div className='container mt-5'>
+        <div className='float-right'>
+          <Link to='/'>Home</Link>
+        </div>
+        <h1>Post</h1>
+        <div className='title'>
+          <p>Title : {location.state.title}</p>
+        </div>
+        <p>Comments :</p>
         {comments.map((comment) => (
-          <div key={comment.id}>
-            {comment.name}
-            <br />
-            {comment.body}
-            <br />
-            {comment.email}
-            <br />
-            <br />
-          </div>
+          <ul key={comment.id}>
+            <li className='comments'>
+              <div>{comment.name}</div>
+              <div>{comment.body}</div>
+              <div>Email : {comment.email}</div>
+              <p></p>{' '}
+            </li>
+          </ul>
         ))}
       </div>
     </>

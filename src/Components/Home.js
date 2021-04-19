@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Posts from './Posts';
-import Post from './Post';
-import ReactAutocomplete from 'react-autocomplete';
+import Autocomplete from 'react-autocomplete';
 import Pagination from './Pagination';
 import axios from 'axios';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-// import './App.css';
+import { Link } from 'react-router-dom';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -47,32 +45,38 @@ const App = () => {
   return (
     <>
       <div className='container mt-5'>
-        <h1 className='text-primary mb-3'>Posts</h1>
-        <ReactAutocomplete
-          style={{ float: 'right' }}
-          items={users}
-          shouldItemRender={(item, value) =>
-            item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
-          }
-          getItemValue={(item) => item.name}
-          renderItem={(item, highlighted) => (
-            <div
-              key={item.id}
-              //   style={{ backgroundColor: highlighted ? '#eee' : 'transparent' }}
-            >
-              {searchValue ? (
-                <Link to={{ pathname: `user/${item.id}`, state: item }}>
-                  {item.name}
-                </Link>
-              ) : (
-                ''
-              )}
-            </div>
-          )}
-          value={searchValue}
-          onChange={(e) => setSearch(e.target.value)}
-          // onSelect={value => this.setState({ value })}
-        />
+        <h1>Posts</h1>
+        <div className='search'>
+          <Autocomplete
+            items={users}
+            shouldItemRender={(item, value) =>
+              item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+            }
+            inputProps={{ placeholder: 'Search' }}
+            getItemValue={(item) => item.name}
+            renderItem={(item, highlighted) => (
+              <div
+                key={item.id}
+                style={{
+                  backgroundColor: highlighted ? '#eee' : 'transparent',
+                }}
+              >
+                {searchValue ? (
+                  <Link to={{ pathname: `user/${item.id}`, state: item }}>
+                    {item.name}
+                  </Link>
+                ) : (
+                  ''
+                )}
+              </div>
+            )}
+            value={searchValue}
+            onChange={(e) => setSearch(e.target.value)}
+            // onSelect={value => this.setState({ value })}
+          />
+        </div>
+        <br />
+
         <Posts
           posts={currentPosts}
           loading={loading}

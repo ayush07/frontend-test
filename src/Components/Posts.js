@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './App.css';
 const Posts = ({ posts, loading, comments, users }) => {
   if (loading) {
     return <h2>Loading...</h2>;
@@ -7,21 +8,19 @@ const Posts = ({ posts, loading, comments, users }) => {
   return (
     <ul className='list-group mb-4'>
       {posts.map((post) => (
-        <div key={post.id}>
-          <span>
-            <Link to={{ pathname: `/post/${post.id}`, state: post }}>
-              Title : {post.title}
+        <div className='post' key={post.id}>
+          <Link to={{ pathname: `/post/${post.id}`, state: post }}>
+            <div>Title : {post.title}</div>
+          </Link>
+
+          {users.map((user) => (
+            <Link
+              key={user.id}
+              to={{ pathname: `user/${user.id}`, state: user }}
+            >
+              {user.id === post.userId ? 'Author : ' + user.username : ''}
             </Link>
-            <br />
-            {users.map((user) => (
-              <Link
-                key={user.id}
-                to={{ pathname: `user/${user.id}`, state: user }}
-              >
-                {user.id === post.userId ? 'Author : ' + user.username : ''}
-              </Link>
-            ))}
-          </span>
+          ))}
         </div>
       ))}
     </ul>
